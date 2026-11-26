@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="mark" aria-hidden="true"></span><span class="brand-name">Token Radar</span><span class="tag">make.fun · token-radar-01</span></div>
+  <div class="top-meta"><span id="snap-date"></span><span>DefiLlama protocol index</span><span id="model-ver"></span></div>
+</header>
+<main id="board">
+  <section class="lede">
+    <div>
+      <h1 id="headline">Pre-token protocols, ranked by implied value</h1>
+      <p id="lede-text">The watchlist is the floor: every protocol with at least $50M of TVL and no token on record. The early radar adds every other rankable pre-token protocol below that floor. Implied value is a model, not a promise — and never a claim that a token will launch.</p>
+    </div>
+    <div class="facts" id="facts"></div>
+  </section>
+  <section class="panel chart-panel" aria-label="Top ten by implied value">
+    <h2>Top 10 by implied value</h2>
+    <p class="sub">Implied value against TVL, for the ten strongest rows. A tall bar on a modest TVL is the model saying growth, age and category are doing the work.</p>
+    <canvas id="chart" width="1120" height="260" role="img" aria-label="Bar chart of the top ten protocols by implied value"></canvas>
+    <div class="legend" id="chart-legend"></div>
+  </section>
+  <div class="controls" id="controls">
+    <div class="field"><label for="q">Search</label><input type="search" id="q" placeholder="Search name, category or chain" aria-label="Search the board"></div>
+    <div class="field"><label for="category">Category</label><select id="category" aria-label="Filter by category"></select></div>
+    <div class="field"><label for="chain">Chain</label><select id="chain" aria-label="Filter by chain"></select></div>
+    <div class="field"><label for="min-tvl">Minimum TVL</label><select id="min-tvl" aria-label="Filter by minimum TVL"><option value="0">Any TVL</option><option value="50000000">$50M and up</option><option value="100000000">$100M and up</option><option value="500000000">$500M and up</option><option value="1000000000">$1B and up</option></select></div>
+    <div class="field"><span class="sub">Token status</span><div class="tabs" role="group" aria-label="Token status"><button type="button" id="tab-pre" aria-pressed="true">Pre-token</button><button type="button" id="tab-live" aria-pressed="false">Live token</button></div></div>
+    <div class="field"><label class="check"><input type="checkbox" id="watchlist-only"> Watchlist only</label></div>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="panel"><div class="table-wrap"><table id="board-table">
+    <caption class="sub">Pre-token protocols, strongest implied value first. Select a row for its model breakdown and farm plan.</caption>
+    <thead><tr>
+      <th scope="col"><button type="button" data-sort="implied">Rank</button></th>
+      <th scope="col"><button type="button" data-sort="name">Protocol</button></th>
+      <th scope="col"><button type="button" data-sort="tvl">TVL</button></th>
+      <th scope="col"><button type="button" data-sort="growth">7d</button></th>
+      <th scope="col"><button type="button" data-sort="age">Age</button></th>
+      <th scope="col"><button type="button" data-sort="implied">Implied value</button></th>
+      <th scope="col"><button type="button" data-sort="pertvl">Implied / TVL</button></th>
+      <th scope="col">Token</th>
+    </tr></thead>
+    <tbody id="tbody"></tbody>
+  </table></div></div>
+  <section class="panel model" id="model-panel">
+    <h2>How implied value is computed — model radar-2</h2>
+    <p class="sub">Every row is scored by one function of the snapshot figures. No protocol name is special-cased, and no row is hand-picked. Change the numbers in the sandbox below and the page recomputes every row live, so you can see what the model actually depends on.</p>
+    <div class="formula" id="formula"></div>
+    <div class="sandbox" id="sandbox">
+      <div class="field"><label for="sb-base">Base multiple (TVL ×)</label><input type="range" id="sb-base" min="0.1" max="0.6" step="0.05" value="0.3"><output id="sb-base-v">0.30</output></div>
+      <div class="field"><label for="sb-growth">Growth weight</label><input type="range" id="sb-growth" min="0" max="1" step="0.1" value="0.6"><output id="sb-growth-v">0.60</output></div>
+      <div class="field"><label for="sb-cat">Category multiple</label><select id="sb-cat"><option value="1">All categories (as scored)</option><option value="1.15">Dexs / derivatives (1.15)</option><option value="1.2">RWA (1.20)</option><option value="0.7">Bridge / staking (0.70)</option></select></div>
+      <button type="button" class="button" id="sb-reset">Reset to radar-2</button>
+      <p class="sub" id="sb-note">Sandbox: recomputes the top row only, to show the model's sensitivity. The board itself always uses radar-2 as published.</p>
+    </div>
+    <p class="sub">TVL and seven-day growth come from the snapshot. Age is the time since the protocol was first listed, the best record of how long it has run with no token; an unlisted age uses 365 days. Maturity rises with age to two years, then eases back: a protocol that has run for years with no token is a little less likely to launch one. Breadth adds 3% per extra chain, capped at 8%. Confidence discounts a row where age or growth is unknown. Live-token protocols are set aside with their market caps shown, because a market price is a fact, not a model.</p>
+  </section>
+  <section class="panel" id="method">
+    <h2>Reading this board</h2>
+    <p class="sub">“Records no token” means DefiLlama's record carries no token for the protocol — it is not proof the protocol has none. A token may exist that its record does not carry. Farm plans are concrete steps with a cost and a time for each; they are not investment advice, and no step ever asks you to pay to claim anything. If a protocol's own page asks for a fee to claim, that is a scam.</p>
+  </section>
+</main>
+<dialog class="detail" id="detail" aria-labelledby="detail-title"></dialog>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
